@@ -1,0 +1,433 @@
+/* Police pixelisée */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: linear-gradient(135deg, #c41e3a 0%, #8b1329 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Pattern de fond style vintage Valentine */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.container {
+    width: 100%;
+    text-align: center;
+    background: rgba(139, 19, 41, 0.6);
+    padding: 25px 40px;
+    border: 4px solid #fff;
+    box-shadow: 
+        0 0 0 8px #c41e3a,
+        0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+/* Écran de démarrage */
+.pixel-title {
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 
+        4px 4px 0 #8b1329,
+        8px 8px 0 rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    line-height: 1.4;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #ffb3c1;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.challenge-text {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border: 2px solid #fff;
+}
+
+.pixel-btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 18px;
+    padding: 15px 40px;
+    background: #fff;
+    color: #c41e3a;
+    border: 4px solid #c41e3a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: none;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.pixel-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
+}
+
+.pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.pixel-btn.small {
+    font-size: 12px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+/* Écran de jeu */
+.game-title {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 0 #8b1329;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid #fff;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.score-label {
+    font-size: 12px;
+    color: #ffb3c1;
+}
+
+.score-value {
+    font-size: 24px;
+    color: #fff;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 auto 15px;
+    max-width: 400px;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.9);
+    border: 4px solid #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(196, 30, 58, 0.2);
+}
+
+.cell:hover:not(.taken) {
+    background: rgba(255,255,255,1);
+    transform: scale(1.05);
+}
+
+.cell.taken {
+    cursor: not-allowed;
+}
+
+.cell::after {
+    content: attr(data-symbol);
+    font-family: 'Press Start 2P', cursive;
+    color: #c41e3a;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+}
+
+.cell.winner {
+    background: #ffb3c1;
+    animation: winPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes winPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #c41e3a;
+    padding: 40px;
+    border: 4px solid #fff;
+    box-shadow: 0 0 0 8px #8b1329;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-title {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 30px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+}
+
+.modal-text {
+    font-size: 16px;
+    color: #ffb3c1;
+    margin-bottom: 20px;
+}
+
+.modal-btn {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* Animation container */
+.animation-container {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Modal GIFs */
+.modal-gif {
+    max-width: 100%;
+    max-height: 350px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .pixel-title {
+        font-size: 24px;
+    }
+    
+    .subtitle {
+        font-size: 12px;
+    }
+    
+    .challenge-text {
+        font-size: 10px;
+        padding: 10px;
+    }
+    
+    .pixel-btn {
+        font-size: 14px;
+        padding: 12px 30px;
+    }
+    
+    .game-title {
+        font-size: 18px;
+    }
+    
+    .cell {
+        font-size: 36px;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .final-title {
+        font-size: 28px;
+    }
+    
+    .final-gift-image {
+        max-width: 80%;
+    }
+}
+
+/* Écran de victoire finale */
+.final-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #c41e3a 0%, #8b1329 100%);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.final-screen.active {
+    display: flex;
+    animation: fadeIn 0.8s ease-in;
+}
+
+.final-content {
+    text-align: center;
+    z-index: 2001;
+    animation: scaleIn 1s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.final-title {
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 
+        4px 4px 0 #8b1329,
+        8px 8px 0 rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.final-subtitle {
+    font-size: 20px;
+    color: #ffb3c1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    margin-bottom: 40px;
+}
+
+.final-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.final-gift-image {
+    width: 80vw;
+    max-width: none;
+    height: 80vh;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    animation: floatGift 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+}
+
+@keyframes floatGift {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Confettis */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}

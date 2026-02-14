@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Game Night - Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Écran de démarrage -->
+    <div id="start-screen" class="screen active">
+        <div class="container">
+            <h1 class="pixel-title">GAME NIGHT</h1>
+            <p class="subtitle">LET'S PLAY A GAME</p>
+            <p class="challenge-text">GAGNE TROIS FOIS<br>POUR AVOIR TON CADEAU</p>
+            <button id="start-btn" class="pixel-btn">START</button>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="screen">
+        <div class="container">
+            <h2 class="game-title">TIC TAC TOE</h2>
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="score-label">YOU</span>
+                    <span id="player-score" class="score-value">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">CPU</span>
+                    <span id="cpu-score" class="score-value">0</span>
+                </div>
+            </div>
+            <div id="game-board" class="game-board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            <button id="reset-btn" class="pixel-btn small">RESET</button>
+        </div>
+    </div>
+
+    <!-- Widget de victoire -->
+    <div id="win-modal" class="modal">
+        <div class="modal-content win">
+            <h2 class="modal-title">YOU WIN!</h2>
+            <div id="flower-animation" class="animation-container">
+                <img src="https://i.postimg.cc/tnHDs355/image.png" alt="Victory" class="modal-gif">
+            </div>
+            <button class="pixel-btn modal-btn" onclick="closeModal()">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <!-- Widget de défaite -->
+    <div id="lose-modal" class="modal">
+        <div class="modal-content lose">
+            <h2 class="modal-title">YOU LOSE!</h2>
+            <p class="modal-text">TRY AGAIN MEC</p>
+            <div class="animation-container">
+                <img src="https://i.postimg.cc/SYpVn6rG/image.png" alt="Try Again" class="modal-gif">
+            </div>
+            <button class="pixel-btn modal-btn" onclick="closeModal()">RETRY</button>
+        </div>
+    </div>
+
+    <!-- Widget d'égalité -->
+    <div id="draw-modal" class="modal">
+        <div class="modal-content draw">
+            <h2 class="modal-title">IT'S A DRAW!</h2>
+            <p class="modal-text">TRY AGAIN MEC</p>
+            <div id="cat-animation" class="animation-container">
+                <img src="https://i.postimg.cc/ZvhjW8cx/image.png" alt="Draw" class="modal-gif">
+            </div>
+            <button class="pixel-btn modal-btn" onclick="closeModal()">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <!-- Écran de victoire finale (3 victoires) -->
+    <div id="final-victory-screen" class="final-screen">
+        <div class="confetti-container" id="confetti-container"></div>
+        <div class="final-content">
+            <h1 class="final-title">BRAVO MEC !</h1>
+            <div class="final-image-container">
+                <img src="https://i.postimg.cc/Q9pNgDpn/image.png" alt="Ton Cadeau" class="final-gift-image">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
